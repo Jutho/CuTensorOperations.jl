@@ -1,0 +1,9 @@
+name = "CuTensorOperations"
+uuid = "01a401d6-3e09-11e9-13be-6f1bb8674acf"
+authors = ["Jutho Haegeman <jutho.haegeman@ugent.be>"]
+version = "0.1.0"
+
+[deps]
+CuArrays = "3a865a2d-5b23-5a0f-bc46-62713ec82fae"
+CuTensor = "ebb3f6ec-140a-11e9-36e4-fb35a4d3e2b4"
+TensorOperations = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
