@@ -5,7 +5,11 @@ import CuArrays: CuArray
 import CuTensor
 import CuTensor: CUTENSOR_OP_IDENTITY, CUTENSOR_OP_CONJ, CUTENSOR_OP_ADD, CuTensorDescriptor, cutensorPointwiseBinary, cutensorContraction, handle, cublastype, CUTENSOR_ALGO_DEFAULT
 
-import TensorOperations: add!, contract!
+import TensorOperations
+import TensorOperations: add!, contract!, IndexTuple, @tensor, isperm
+
+export @tensor, CuArray
+
 
 function add!(α, A::CuArray{<:Any, N}, CA::Symbol,
         β, C::CuArray{<:Any, N}, indCinA) where {N}
@@ -72,10 +76,10 @@ function contract!(α, A::CuArray, CA::Symbol, B::CuArray, CB::Symbol,
         indCinoAB::IndexTuple, syms::Union{Nothing, NTuple{3,Symbol}} = nothing)
 
     pA = (oindA...,cindA...)
-    (length(pA) == ndims(A) && TupleTools.isperm(pA)) ||
+    (length(pA) == ndims(A) && isperm(pA)) ||
         throw(IndexError("invalid permutation of length $(ndims(A)): $pA"))
     pB = (oindB...,cindB...)
-    (length(pB) == ndims(B) && TupleTools.isperm(pB)) ||
+    (length(pB) == ndims(B) && isperm(pB)) ||
         throw(IndexError("invalid permutation of length $(ndims(B)): $pB"))
     (length(oindA) + length(oindB) == ndims(C)) ||
         throw(IndexError("non-matching output indices in contraction"))
@@ -104,8 +108,8 @@ function contract!(α, A::CuArray, CA::Symbol, B::CuArray, CB::Symbol,
     CA == :N || CA == :C || throw(ArgumentError("Value of conjA should be :N or :C instead of $CA"))
     CB == :N || CB == :C || throw(ArgumentError("Value of conjB should be :N or :C instead of $CB"))
 
-    opA = CA == :N ? CUTENSOR_OP_IDENTITY : CUTENSOR_OP_CONJ
-    opB = CB == :N ? CUTENSOR_OP_IDENTITY : CUTENSOR_OP_CONJ
+    opA = (TC <: Real || CA == :N) ? CUTENSOR_OP_IDENTITY : CUTENSOR_OP_CONJ
+    opB = (TC <: Real || CB == :N) ? CUTENSOR_OP_IDENTITY : CUTENSOR_OP_CONJ
     opC = CUTENSOR_OP_IDENTITY
 
     strideA = i->stride(A, i)
