@@ -9,12 +9,16 @@ Launch the Julia REPL, enter package mode by typing `]` and install necessary pa
 pgk> add CuArrays
 pgk> add TensorOperations
 pkg> add BenchmarkTools
-pkg> add https://github.com/Jutho/CuTensor.jl.git
-pkg> add https://github.com/Jutho/CuTensorOperations.jl.git
+pkg> dev https://github.com/Jutho/CuTensor.jl.git
+pkg> dev https://github.com/Jutho/CuTensorOperations.jl.git
 ```
-The install/build process of CuTensor.jl will ask you to specify the path to where the "libcutensor.so" shared library is installed.
+The install/build process of CuTensor.jl will probably fail, unless you have "libcutensor.so" in your home directory, or in "/usr/local/cutensor/lib". If it fails, add "libcutensor.so" in one of these directories, or in "~/.julia/dev/CuTensor/bin". Then do
+```
+pkg> build CuTensor
+```
+Type backspace to return to the normal `julia>` REPL mode.
 
-Type backspace to return to the normal `julia>` REPL mode. By default, Julia's linear algebra is running on OpenBLAS. You can easily install MKL, but this slows down the boot time of julia, i.e. it will start up a bit slower and feel a bit less snappy during the first few instructions. This can then be fixed, but I will not explain this here. This will likely be resolved in an upcoming Julia version, but that's why currently the package to install MKL is also not official yet. To install, go back to package mode and do
+Optional: By default, Julia's linear algebra is running on OpenBLAS. You can easily install MKL, but this slows down the boot time of julia, i.e. it will start up a bit slower and feel a bit less snappy during the first few instructions. This can then be fixed, but I will not explain this here. This will likely be resolved in an upcoming Julia version, but that's why currently the package to install MKL is also not official yet. To install, go back to package mode and do
 ```
 pkg> add https://github.com/JuliaComputing/MKL.jl.git
 ```
