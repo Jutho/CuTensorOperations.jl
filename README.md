@@ -12,7 +12,7 @@ pkg> add BenchmarkTools
 pkg> dev https://github.com/Jutho/CuTensor.jl.git
 pkg> dev https://github.com/Jutho/CuTensorOperations.jl.git
 ```
-The install/build process of CuTensor.jl will probably fail, unless you have "libcutensor.so" in your home directory, or in "/usr/local/cutensor/lib". If it fails, add "libcutensor.so" in one of these directories, or in "~/.julia/dev/CuTensor/bin". Then do
+The install/build process of CuTensor.jl will probably fail, unless you have "libcutensor.so" in your home directory, or in "/usr/local/cutensor/lib". If it fails, add "libcutensor.so" in one of these directories, or in "~/.julia/dev/CuTensor/bin". The `bin` directory will need to be created first. Then do
 ```
 pkg> build CuTensor
 ```
