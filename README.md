@@ -21,8 +21,8 @@ pkg> add https://github.com/JuliaComputing/MKL.jl.git
 
 In Julia REPL mode, do
 ```
-julia> import Pkg
-julia> include(joinpath(Pkg.API.dir("CuTensorOperations","benchmark/bench.jl")))
+julia> using CuTensorOperations
+julia> include(joinpath(dirname(pathof(CuTensorOperations)),"../benchmark/bench.jl"))
 ```
 
 This will bring a number of functions into the namespace, namely
@@ -43,5 +43,6 @@ The `...bench` functions use `@benchmark` from the BenchmarkTools.jl` package to
 
 ## Issues so far
 
-* `peps2check` and `peps2bench` fail with CuTensor, not sure why
+* `peps2check` and `peps2bench` fail with CuTensor, not sure why. Error is:
+   `ERROR: CUTENSORError(code CUTENSOR_STATUS_INTERNAL_ERROR, an internal operation failed)`
 * All routines fail with `T <: Complex`, because the contractions involve complex conjugation. For `T <: Real`, this complex conjugation is ignored.

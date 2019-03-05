@@ -139,7 +139,7 @@ Check whether PEPS contraction type 2 produces same result on CPU and GPU/CUDA; 
 *   m: PEPO bond dimension (range 2 - 8??)
 *   χ: boundary MPS bond dimension (range 10 - 1000, the larger the better)
 """
-function peps2check(T = Float64; D = 4, d = 2, m = 2, χ = 256)
+function peps2check(T = Float64; D = 4, d = 2, m = 2, χ = 128)
     A = randn(T, (D, D, D, D, d))
     FL = randn(T, (χ, D, m, D, χ))
     FR = randn(T, (χ, D, m, D, χ))
@@ -175,7 +175,7 @@ Benchmark PEPS contraction type 2, on CPU, GPU and GPU+transfer time; specify:
 *   m: PEPO bond dimension
 *   χ: boundary MPS bond dimension (range 10 - 1000, the larger the better)
 """
-function peps2bench(T = Float64; D = 4, d = 2, m = 2, χ = 256)
+function peps2bench(T = Float64; D = 4, d = 2, m = 2, χ = 128)
     A = randn(T, (D, D, D, D, d))
     FL = randn(T, (χ, D, m, D, χ))
     FR = randn(T, (χ, D, m, D, χ))
