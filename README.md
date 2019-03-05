@@ -23,12 +23,14 @@ Optional: By default, Julia's linear algebra is running on OpenBLAS. You can eas
 pkg> add https://github.com/JuliaComputing/MKL.jl.git
 ```
 
+## Usage instructions
+
 In Julia REPL mode, do
 ```
 julia> using CuTensorOperations
 # the first time, this will take a long time, because it also precompiles all the packages
-# that CuTensorOperations depends on, mainly the compilation time of CuTensorOperations
-# takes quite a bit of time
+# that CuTensorOperations depends on, mainly the compilation of TensorOperations itself
+# (and its dependencies) takes quite a bit of time
 julia> include(joinpath(dirname(pathof(CuTensorOperations)),"../benchmark/bench.jl"))
 ```
 
@@ -46,7 +48,40 @@ julia> ENV["CUTENSOR_DEBUG"] = "1"
 ```
 to print out all the debug information of cuTensor during the different pairwise contractions.
 
-The `...bench` functions use `@benchmark` from the BenchmarkTools.jl` package to run the contraction a large number of times and gather statistics. Here, three different benchmarks are ran. The first one evaluates the tensor network contraction on the CPU, the second one does the same with the tensors already living on the GPU. The third benchmark also includes the time to transfer the tensors to the GPU.
+The `...bench` functions use `@benchmark` from the BenchmarkTools.jl` package to run the contraction a large number of times and gather statistics. Here, three different benchmarks are ran. The first one evaluates the tensor network contraction on the CPU, the second one does the same with the tensors already living on the GPU. The third benchmark also includes the time to transfer the tensors to the GPU. You can call these functions as `b1, b2, b3 = mpsbench(D = 256, d = 2, m = 8)` where the arguments are optional. Together, `(b1, b2, b3)` only show the minimal time sample, when printing one of these values separately, more information about the statistics is printed. E.g.:
+
+```
+julia> b1, b2, b3 = mpsbench(D = 256, d = 2, m = 8)
+(Trial(6.868 ms), Trial(1.262 ms), Trial(17.035 ms))
+
+julia> b1
+BenchmarkTools.Trial:
+  memory estimate:  12.61 KiB
+  allocs estimate:  273
+  --------------
+  minimum time:     6.868 ms (0.00% GC)
+  median time:      6.950 ms (0.00% GC)
+  mean time:        7.000 ms (0.00% GC)
+  maximum time:     8.782 ms (0.00% GC)
+  --------------
+  samples:          714
+  evals/sample:     1
+
+julia> b2
+BenchmarkTools.Trial:
+  memory estimate:  9.16 KiB
+  allocs estimate:  150
+  --------------
+  minimum time:     1.262 ms (0.00% GC)
+  median time:      1.293 ms (0.00% GC)
+  mean time:        1.312 ms (0.12% GC)
+  maximum time:     11.250 ms (53.08% GC)
+  --------------
+  samples:          3804
+  evals/sample:     1
+```
+
+Again, these functions take quite a bit of time on the first run, due to precompilation. Nonetheless, the benchmark times do not include these compilation time, the `@benchmark` macro takes care of this. But the `...bench` functions are not superfast after precompilation either, just because the three benchmarks are ran many times to collect detailed statistics.
 
 ## Issues so far
 
