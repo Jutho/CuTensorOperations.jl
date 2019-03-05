@@ -7,14 +7,14 @@ using BenchmarkTools
 const CA = CuArray
 
 """
-    mpscheck(T = Float64; D = ..., d = ..., m = ...)
+    mpscheck(T = Float64; D = 256, d = 2, m = 8)
 
 Check whether MPS contraction produces same result on CPU and GPU/CUDA; specify
 *   D: MPS bond dimension (range 10 - 1000)
 *   d: MPS physical dimension (range 2 - 5)
 *   m: MPO bond dimension (range 2 - 20, occasionally larger)
 """
-function mpscheck(T = Float64; D, d, m)
+function mpscheck(T = Float64; D = 256, d = 2, m = 8)
     A = randn(T, (D, d, D))
     FL = randn(T, (D, m, D))
     FR = randn(T, (D, m, D))
@@ -36,14 +36,14 @@ end
 
 
 """
-    mpsbench(T = Float64; D = ..., d = ..., m = ...)
+    mpsbench(T = Float64; D = 256, d = 2, m = 8)
 
 Benchmark MPS contraction, on CPU, GPU and GPU+transfer time; specify:
 *   D: MPS bond dimension (range 10 - 1000)
 *   d: MPS physical dimension (range 2 - 5)
 *   m: MPO bond dimension (range 2 - 20, occasionally larger)
 """
-function mpsbench(T = Float64; D, d, m)
+function mpsbench(T = Float64; D = 256, d = 2, m = 8)
     A = randn(T, (D, d, D))
     FL = randn(T, (D, m, D))
     FR = randn(T, (D, m, D))
@@ -68,14 +68,14 @@ function mpsbench(T = Float64; D, d, m)
 end
 
 """
-    peps1check(T = Float64; D = ..., d = ..., χ = ...)
+    peps1check(T = Float64; D = 4, d = 2, χ = 256)
 
 Check whether PEPS contraction type 1 produces same result on CPU and GPU/CUDA; specify
 *   D: PEPS bond dimension (range 2 - 6, preferably larger)
 *   d: PEPS physical dimension (range 2 - 5)
 *   χ: boundary MPS bond dimension (range 10 - 1000, the larger the better)
 """
-function peps1check(T = Float64; D, d, χ)
+function peps1check(T = Float64; D = 4, d = 2, χ = 256)
     A = randn(T, (D, D, D, D, d))
     FL = randn(T, (χ, D, D, χ))
     FR = randn(T, (χ, D, D, χ))
@@ -98,14 +98,14 @@ function peps1check(T = Float64; D, d, χ)
 end
 
 """
-    peps1bench(T = Float64; D = ..., d = ..., χ = ...)
+    peps1bench(T = Float64; D = 4, d = 2, χ = 256)
 
 Benchmark PEPS contraction type 1, on CPU, GPU and GPU+transfer time; specify:
 *   D: PEPS bond dimension (range 2 - 6, preferably larger)
 *   d: PEPS physical dimension (range 2 - 5)
 *   χ: boundary MPS bond dimension (range 10 - 1000, the larger the better)
 """
-function peps1bench(T = Float64; D, d, χ)
+function peps1bench(T = Float64; D = 4, d = 2, χ = 256)
     A = randn(T, (D, D, D, D, d))
     FL = randn(T, (χ, D, D, χ))
     FR = randn(T, (χ, D, D, χ))
@@ -131,15 +131,15 @@ function peps1bench(T = Float64; D, d, χ)
 end
 
 """
-    peps2check(T = Float64; D = ..., d = ..., m = ..., χ = ...)
+    peps2check(T = Float64; D = 4, d = 2, m = 2, χ = 256)
 
 Check whether PEPS contraction type 2 produces same result on CPU and GPU/CUDA; specify
 *   D: PEPS bond dimension (range 2 - 6, preferably larger)
 *   d: PEPS physical dimension (range 2 - 5)
-*   m: PEPO bond dimension
+*   m: PEPO bond dimension (range 2 - 8??)
 *   χ: boundary MPS bond dimension (range 10 - 1000, the larger the better)
 """
-function peps2check(T = Float64; D, d, m, χ)
+function peps2check(T = Float64; D = 4, d = 2, m = 2, χ = 256)
     A = randn(T, (D, D, D, D, d))
     FL = randn(T, (χ, D, m, D, χ))
     FR = randn(T, (χ, D, m, D, χ))
@@ -167,7 +167,7 @@ end
 
 
 """
-    peps2bench(; D = ..., d = ..., m = ..., χ = ...)
+    peps2bench(T = Float64; D = 4, d = 2, m = 2, χ = 256)
 
 Benchmark PEPS contraction type 2, on CPU, GPU and GPU+transfer time; specify:
 *   D: PEPS bond dimension (range 2 - 6, preferably larger)
@@ -175,7 +175,7 @@ Benchmark PEPS contraction type 2, on CPU, GPU and GPU+transfer time; specify:
 *   m: PEPO bond dimension
 *   χ: boundary MPS bond dimension (range 10 - 1000, the larger the better)
 """
-function peps2bench(T = Float64; D, d, m, χ)
+function peps2bench(T = Float64; D = 4, d = 2, m = 2, χ = 256)
     A = randn(T, (D, D, D, D, d))
     FL = randn(T, (χ, D, m, D, χ))
     FR = randn(T, (χ, D, m, D, χ))
