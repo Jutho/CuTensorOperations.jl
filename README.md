@@ -6,7 +6,7 @@ Get a working copy of Julia (v1.1). Make sure CUDA is available at standard loca
 
 Launch the Julia REPL, enter package mode by typing `]` and install necessary packages
 ```
-pgk> add CuArrays
+pgk> add CuArrays # this can take a while on a clean Julia installation
 pgk> add TensorOperations
 pkg> add BenchmarkTools
 pkg> dev https://github.com/Jutho/CuTensor.jl.git
@@ -26,6 +26,9 @@ pkg> add https://github.com/JuliaComputing/MKL.jl.git
 In Julia REPL mode, do
 ```
 julia> using CuTensorOperations
+# the first time, this will take a long time, because it also precompiles all the packages
+# that CuTensorOperations depends on, mainly the compilation time of CuTensorOperations
+# takes quite a bit of time
 julia> include(joinpath(dirname(pathof(CuTensorOperations)),"../benchmark/bench.jl"))
 ```
 
