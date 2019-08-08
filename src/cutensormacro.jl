@@ -69,7 +69,7 @@ function replace_and_splice!(ex::Expr, s1, s2, rhs)
             end
             i += 1
         end
-    else
+    elseif !(ex.head == :call && ex.args[1] == :throw)
         @show ex
         error("unexpected expression")
     end
