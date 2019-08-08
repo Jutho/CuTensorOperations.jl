@@ -10,7 +10,7 @@ Furthermore, `CuTensorOperations` provides a `@cutensor` macro, that acts like `
 
 Get a working copy of Julia (v1.1 or later). Make sure CUDA is available at standard location.
 
-Download [cuTENSOR](https://developer.nvidia.com/cuTensor) from the NVidia Developer Program; make sure `libcutensor.so` is available at a location that is found by the system, e.g. `/usr/local/lib` on a MacOS X or Linux system.
+Download [cuTENSOR](https://developer.nvidia.com/cuTensor) from the NVidia Developer Program and test your installation. Make sure `libcutensor.so` is available at a location that is found by the system, e.g. `/usr/local/lib` on a MacOS X or Linux system.
 
 Launch the Julia REPL, enter package mode by typing `]` and install necessary packages
 ```
