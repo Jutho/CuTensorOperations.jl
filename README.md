@@ -1,6 +1,7 @@
 # CuTensorOperations.jl
 
 CuTensorOperations.jl is a Julia interface to NVidia's [cuTENSOR](https://developer.nvidia.com/cuTensor) library that enables TensorOperations.jl to work on `CuArray` objects. The low-level methods from cuTENSOR are wrapped by CuArrays.jl on the experimental branch `ksh/tensor`. CuTensorOperations.jl provides a high level interface, but does not (yet) provide any fallback definitions for those cases where the cuTENSOR library does not work (e.g. certain combinations of eltypes, certain trace operations, ...).
+In particular, known operations that are currently not supported are outer products (contractions without any shared indices) and traces where the first index or dimension of the tensor participates in a trace. 
 
 By `using CuTensorOperations`, definitions are provided for a set of methods from `TensorOperations.jl` for `CuArray` objects to make `@tensor` and friends work with `CuArray` objects. This is type piracy: defining methods from another package for objects from another package. In time, CuTensorOperations.jl should become integrated into TensorOperations.jl and loaded when it is loaded together with CuArrays.jl.
 

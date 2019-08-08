@@ -83,7 +83,7 @@ function TensorOperations.trace!(α, A::CuArray, CA::Symbol, β, C::CuArray,
     descD = descC
     typeCompute = cudaDataType(T)
     modeA = collect(Cint, 1:NA)
-    modeC = collect(Cint, indCinA)
+    modeC = collect(Cint, 1:NC)
     stream = CuDefaultStream()
     workspaceSize = Ref{UInt64}(C_NULL)
     cutensorReductionGetWorkspace(handle(), A, descA, modeA,

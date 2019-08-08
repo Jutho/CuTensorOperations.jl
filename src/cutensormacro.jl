@@ -25,10 +25,12 @@ macro cutensor(ex::Expr)
             outtensors[k] = v2
         end
     end
-
-    post = Expr(:block, [:(copyto!($k, $(esc(v)))) for (k,v) in outtensors]...)
-
-    return Expr(:block, pre, ex, post)
+    if length(outtensors) > 0
+        post = Expr(:block, [:(copyto!($k, $(esc(v)))) for (k,v) in outtensors]...)
+        return Expr(:block, pre, ex, post)
+    else
+        return Expr(:block, pre, ex)
+    end
 end
 
 # check if a subexpression contains/uses the variable s, but ignore `eltype` calls
