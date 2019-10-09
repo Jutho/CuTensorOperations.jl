@@ -13,8 +13,9 @@ using CuArrays.CUTENSOR: handle, CuDefaultStream, CuTensorDescriptor, cudaDataTy
 using CuArrays.CUBLAS: CublasFloat, CublasReal
 using TensorOperations
 using TensorOperations: IndexTuple, isperm # for implementation
-using TensorOperations: _flatten, tensorify, expandconj, processcontractorder,
-                        extracttensors! # for macro
+using TensorOperations: getinputtensorobjects, getoutputtensorobjects,
+                        getnewtensorobjects, replacetensorobjects,
+                        TensorParser
 
 using TensorOperations: add!, trace!, contract!,
         similar_from_indices, cached_similar_from_indices, IndexError

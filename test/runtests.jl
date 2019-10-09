@@ -116,7 +116,7 @@ end
         D[a, b, c] = A[a, e, f, c, f, g] * B[g, b, e] + α * C[c, a, b]
         E[a, b, c] := A[a, e, f, c, f, g] * B[g, b, e] + α * C[c, a, b]
     end
-    @test D == E
+    @test D == collect(E)
     println("readme example: $(time()-t0) seconds")
     t0 = time()
 
